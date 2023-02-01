@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MainActivity"
+    android:orientation="vertical"
+    android:background="@drawable/fondo">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="150dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        app:cardBackgroundColor="@color/fondo">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="116dp"
+                android:layout_height="145dp"
+                app:srcCompat="@drawable/app"
+                android:layout_gravity="center"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtLogin"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/user"
+                app:boxBackgroundColor="@color/white"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:startIconDrawable="@drawable/perfil"
+                app:startIconTint="@color/colorIconos">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:id="@+id/editUser" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtPass"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                app:boxBackgroundColor="@color/white"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:startIconDrawable="@drawable/password"
+                app:startIconTint="@color/colorIconos">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:id="@+id/editPass"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/txtCambio"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="@string/aun_no_estas_registrado_hazlo_ahora"
+                android:layout_gravity="center"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:visibility="gone"
+                android:id="@+id/txtEmail"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                app:boxBackgroundColor="@color/white"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:startIconDrawable="@drawable/email"
+                app:startIconTint="@color/colorIconos">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:id="@+id/editEmail" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="250dp"
+                android:layout_height="60dp"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/colorBoton"
+                android:text="@string/sign_in"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="15dp"/>
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/btnVolver"
+                android:layout_width="250dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/colorBoton"
+                android:text="@string/login"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+</LinearLayout>

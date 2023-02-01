@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">PracticaFinal</string>
+    <string name="user">User</string>
+    <string name="foto_de_login">Foto de login</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="aun_no_estas_registrado_hazlo_ahora">¿Aun no estas registrado? Hazlo ahora</string>
+    <string name="email">Email</string>
+    <string name="login">Login</string>
+</resources>
