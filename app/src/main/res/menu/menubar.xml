@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/user"
+        android:title="Profile"
+        android:contentDescription="Change ur settings"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/search"
+        android:title="Search"
+        android:contentDescription="Search"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/exit"
+        android:icon="@drawable/logout"
+        android:title="Logout"
+        android:contentDescription="Exit"
+        app:showAsAction="ifRoom" />
+</menu>

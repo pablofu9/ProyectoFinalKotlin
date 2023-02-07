@@ -1,5 +1,6 @@
 package com.example.practicafinal.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnLogin.setOnClickListener(this)
         btnVolver.setOnClickListener(this)
 
+
     }
 
     override fun onClick(v: View?) {
@@ -47,6 +49,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 txtCambio.visibility=View.VISIBLE
                 btnLogin.setText("Sign in")
                 btnVolver.visibility=View.GONE
+            }
+            R.id.btnLogin-> {
+                val intent = Intent(this, Menu::class.java)
+                startActivity(intent)
             }
         }
 

@@ -13,4 +13,5 @@
     <color name="fondo">#99BDFF</color>
     <color name="colorIconos">#7BAEC6</color>
     <color name="colorBoton">#FFBE9B</color>
+    <color name="navBar">#31476D</color>
 </resources>
