@@ -24,15 +24,12 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:title="Menu"
+            app:titleTextAppearance="@font/purplesmile"
             app:titleTextColor="@color/white"
             app:menu="@menu/menubar"
             android:background="@color/navBar"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
-            >
-
+            style="@style/Widget.MaterialComponents.Toolbar.Primary">
         </com.google.android.material.appbar.MaterialToolbar>
-
-
     </com.google.android.material.appbar.AppBarLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
