@@ -44,6 +44,9 @@
     <style name="ColoredBackground" parent="BaseStyleableToast">
         <item name="stColorBackground">#FF5A5F</item>
     </style>
+    <style name="ColoredBackgroundGreen" parent="BaseStyleableToast">
+        <item name="stColorBackground">#10FF14</item>
+    </style>
 
     <style name="ColoredText" parent="BaseStyleableToast">
         <item name="stTextColor">#FF5A5F</item>

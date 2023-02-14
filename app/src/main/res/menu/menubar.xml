@@ -16,6 +16,13 @@
         android:iconTint="@color/colorBoton"
         android:contentDescription="Search"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/carrito"
+        android:icon="@drawable/carrito"
+        android:title="Carrito"
+        android:iconTint="@color/colorBoton"
+        android:contentDescription="Carrito"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/exit"

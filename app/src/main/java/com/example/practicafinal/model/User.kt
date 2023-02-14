@@ -22,6 +22,13 @@ class User: java.io.Serializable {
         this.email = email
         this.admin = admin
     }
+    constructor(){
+        this.id=0
+        this.name = ""
+        this.pass = ""
+        this.email = ""
+        this.admin = false
+    }
 
     override fun toString(): String {
         return "User(id=$id, name='$name', pass='$pass', email='$email', admin=$admin)"

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -73,6 +74,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         //Hacemos la llamada al metodo, para llenar el arraylist con los usuarios que tenemos en la api
         getUsers()
+
     }
 
     override fun onClick(v: View?) {
@@ -103,26 +105,43 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             R.style.ColoredBackground
                         ).show()
                     } else {
-
+                        var correcto:Boolean=false
+                        var userLogged:User=User()
                         for (user in arrayUsers) {
                             if (editUser.text.toString() == user.name && editPass.text.toString() == user.pass) {
                                 //Usuario y pass correctos, vamos al menu, estamos logeados
-                                val intent = Intent(this, Menu::class.java)
-                                intent.putExtra("user", user)
-                                startActivity(intent)
+                                correcto=true
+                                userLogged=user
+                                break
                             } else {
                                 //Sale el toast 3 veces porque estamos dentro del for
                                 //El usuario no es correcta
-                                StyleableToast.makeText(
-                                    this,
-                                    "Credenciales incorrectas",
-                                    R.style.ColoredBoldText
-                                ).show()
+                                correcto=false
                             }
+                        }
+                        if(correcto){
+                            val intent = Intent(this, Menu::class.java)
+                            intent.putExtra("user", userLogged)
+                            startActivity(intent)
+                        }else{
+                            StyleableToast.makeText(
+                                this,
+                                "Credenciales incorrectas",
+                                R.style.ColoredBoldText
+                            ).show()
                         }
 
                     }
                 } else {
+                    /**
+                     * A partir de aqui es donde hacemos las comprobaciones de register
+                     * 1.Comprobamos que no haya ningun usuario en la BD con ese nombre
+                     * 2. Si no lo hay comprobamos nombre --> Entre 3 y 10 caracteres
+                     * 3. Si lo anterior es correcto, comprobamos password seguro --> Entre 5 y 12
+                     * 4. Mediante un metodo para ver el patron del email, comprobamos email correcto
+                     * 5. Si todas las condiciones se cumplen, el usuario se registrara
+                     */
+                    var existe:Boolean=false
                     //Aqui nos registramos
                     if (!camposRegisterVacios()) {
                         //Si hay algun campo vacio no te deja avanzar
@@ -130,6 +149,62 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             this, "Debes rellenar todos los " +
                                     "campos para registrarte", R.style.ColoredBackground
                         ).show()
+                    } else {
+                        for (user in arrayUsers){
+                            if (editUser.text.toString() == user.name){
+                                existe = true
+                                break
+                            }else{
+                                existe = false
+                            }
+                        }
+                        if(existe){
+                            StyleableToast.makeText(
+                                this,
+                                "Ya hay un usuario con este nombre, introduzca otro",
+                                R.style.ColoredBoldText
+                            ).show()
+                        }else{
+                            if (editUser.text!!.length <=3 || editUser.text!!.length >10 ){
+                                StyleableToast.makeText(
+                                    this,
+                                    "Formato incorrecto, el nombre de usuario debe de tener entre 4 y 10 caracteres",
+                                    R.style.ColoredBoldText
+                                ).show()
+                            } else{
+                                if (editPass.text!!.length <3 || editUser.text!!.length >12 ){
+                                    StyleableToast.makeText(
+                                        this,
+                                        "Introduzca una contraseña segura, entre 5 y 12 caracteres",
+                                        R.style.ColoredBoldText
+                                    ).show()
+                                }else{
+                                    if(validarEmail(editEmail.text.toString())){
+                                        StyleableToast.makeText(
+                                            this,
+                                            "Usuario registrado, inicie sesión",
+                                            R.style.ColoredBackgroundGreen
+                                        ).show()
+                                        //Registro correcto
+                                        txtEmail.visibility=GONE
+                                        txtCambio.visibility=View.VISIBLE
+                                        btnVolver.visibility=View.GONE
+                                        btnLogin.setText("Sign in")
+                                        val userRegister:User=User(editUser.text.toString(), editPass.text.toString(),
+                                            editEmail.text.toString(), false)
+                                        createUser(userRegister)
+                                        arrayUsers.add(userRegister)
+
+                                    }else{
+                                        StyleableToast.makeText(
+                                            this,
+                                            "Formato de email incorrecto",
+                                            R.style.ColoredBoldText
+                                        ).show()
+                                    }
+                                }
+                            }
+                        }
                     }
 
                 }
@@ -157,6 +232,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
     }
+    fun createUser(u:User){
+        serviceUser.createUser(u)
+    }
 
     fun camposLoginVacios(): Boolean {
         return !(editUser.text.toString().isEmpty() || editPass.text.toString().isEmpty())
@@ -167,6 +245,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             .isEmpty() || editEmail.text.toString().isEmpty())
     }
 
+    fun validarEmail(email:String):Boolean{
+        val emailPattern = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+        return emailPattern.matches(email)
+    }
     //Para que desde el main, al darle para atras cierre la app
     override fun onBackPressed() {
         finishAffinity()
