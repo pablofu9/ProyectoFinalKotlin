@@ -9,6 +9,8 @@ import android.view.View.GONE
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.example.practicafinal.R
 import com.example.practicafinal.model.User
 import com.example.practicafinal.services.UserService
@@ -104,6 +106,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             "Introduce tus credenciales",
                             R.style.ColoredBackground
                         ).show()
+                        // Los editText botaran si estan vacios
+                        YoYo.with(Techniques.Shake)
+                            .duration(800)
+                            .repeat(2)
+                            .playOn(findViewById(R.id.editUser));
+                        YoYo.with(Techniques.Shake)
+                            .duration(800)
+                            .repeat(2)
+                            .playOn(findViewById(R.id.editPass));
                     } else {
                         var correcto:Boolean=false
                         var userLogged:User=User()
@@ -187,9 +198,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             }
                         }
                     }
-
                 }
-
             }
         }
 

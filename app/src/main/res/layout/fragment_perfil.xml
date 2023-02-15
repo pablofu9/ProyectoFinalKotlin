@@ -17,13 +17,16 @@
             android:text="Nombre"
             android:id="@+id/txtUser"
             android:textSize="20sp"
+            android:layout_marginLeft="15dp"
             android:layout_margin="20dp"
             android:layout_marginStart="40dp"
+            android:textColor="@color/black"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nombre"
+            android:textColor="@color/text"
             android:id="@+id/txtUser1"
             android:layout_toRightOf="@id/txtUser"
             android:layout_margin="20dp"
@@ -33,16 +36,19 @@
             android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:text="Password"
+            android:layout_marginLeft="15dp"
             android:id="@+id/txtPass"
             android:textSize="20sp"
             android:layout_margin="20dp"
             android:layout_marginStart="40dp"
             android:layout_below="@id/txtUser"
+            android:textColor="@color/black"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Password"
+            android:textColor="@color/text"
             android:id="@+id/txtPass1"
             android:layout_below="@id/txtUser"
             android:layout_toRightOf="@id/txtPass"
@@ -54,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Email actual"
+            android:textColor="@color/text"
             android:id="@+id/editEmail"
             android:layout_below="@id/txtPass"
 
@@ -64,6 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Nuevo email"
+            android:textColor="@color/text"
             android:id="@+id/editCambioEmail"
             android:layout_below="@id/editEmail"
 

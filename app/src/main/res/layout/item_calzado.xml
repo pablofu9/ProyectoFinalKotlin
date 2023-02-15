@@ -7,23 +7,28 @@
        android:layout_width="100dp"
        android:layout_height="wrap_content"
        android:id="@+id/txtMarca"
-       android:layout_margin="10dp"/>
+       android:layout_margin="10dp"
+       android:textColor="@color/black"
+       android:fontFamily="@font/purplesmile"/>
     <TextView
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/txtModelo"
         android:layout_below="@+id/txtMarca"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:textColor="@color/black"/>
     <TextView
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/txtTalla"
         android:layout_margin="10dp"
-        android:layout_toRightOf="@+id/txtMarca"/>
+        android:layout_toRightOf="@+id/txtMarca"
+        android:textColor="@color/black"/>
     <TextView
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/txtPrecio"
         android:layout_margin="10dp"
-        android:layout_toRightOf="@+id/txtTalla"/>
+        android:layout_toRightOf="@+id/txtTalla"
+        android:textColor="@color/black"/>
 </RelativeLayout>

@@ -1,5 +1,6 @@
-package com.example.practicafinal.adapter
+package com.example.practicafinal.controller
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +13,10 @@ import com.example.practicafinal.model.Calzado
 class ProductoAdapter(private val mContext: Context, private val listaCalzado: List<Calzado>) : ArrayAdapter<Calzado>
     (mContext, R.layout.item_calzado,listaCalzado)
 {
+    @SuppressLint("SetTextI18n")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val inflater =LayoutInflater.from(mContext)
-        val convertview =inflater.inflate(R.layout.item_calzado,null)
+        val convertView =inflater.inflate(R.layout.item_calzado,null)
         val txtMarca = convertView?.findViewById<TextView>(R.id.txtMarca)
         val txtModelo = convertView?.findViewById<TextView>(R.id.txtModelo)
         val txtTalla = convertView?.findViewById<TextView>(R.id.txtTalla)
@@ -23,7 +25,7 @@ class ProductoAdapter(private val mContext: Context, private val listaCalzado: L
         txtMarca!!.text = listaCalzado[position].marca
         txtModelo!!.text = listaCalzado[position].modelo
         txtTalla!!.text = listaCalzado[position].talla.toString()
-        txtPrecio!!.text = listaCalzado[position].precio.toString()
+        txtPrecio!!.text = listaCalzado[position].precio.toString() + " € "
         return convertView
     }
 }

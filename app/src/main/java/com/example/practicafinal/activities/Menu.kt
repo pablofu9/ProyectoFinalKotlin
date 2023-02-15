@@ -15,9 +15,11 @@ import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import com.example.practicafinal.R
+import com.example.practicafinal.dialogs.DialogComprar
 import com.example.practicafinal.dialogs.DialogFiltro
 import com.example.practicafinal.fragments.FragmentPerfil
 import com.example.practicafinal.fragments.FragmentProductos
+import com.example.practicafinal.model.Calzado
 import com.example.practicafinal.model.User
 import com.example.practicafinal.services.UserService
 import com.google.android.material.appbar.MaterialToolbar
@@ -26,12 +28,15 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener,FragmentPerfil.DataCallback {
+class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener,FragmentPerfil.DataCallback, DialogComprar.MyDialogListener {
     private lateinit var topAppBar:MaterialToolbar
     val manager = supportFragmentManager
     val fragmentPerfil = FragmentPerfil()
     val fragmentProductos = FragmentProductos()
     private lateinit var frame1:FrameLayout
+    var userCambiado: User? =null
+    var objetoComprado:Calzado?=null
+    private var carritoLleno:Boolean=false
     var user:User=User()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +63,8 @@ class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener,FragmentPerfil
     }
 
 
+
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when(item?.itemId){
@@ -67,7 +74,11 @@ class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener,FragmentPerfil
                  */
                 val transaction = manager.beginTransaction()
                 val bundle = Bundle()
-                bundle.putSerializable("user",user)
+                if(userCambiado!=null){
+                    bundle.putSerializable("user",userCambiado)
+                }else{
+                    bundle.putSerializable("user",user)
+                }
                 fragmentPerfil.arguments=bundle
                 transaction.replace(R.id.frame1, fragmentPerfil)
                 transaction.addToBackStack(null)
@@ -123,13 +134,29 @@ class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener,FragmentPerfil
         finishAffinity()
     }
 
-    override fun onDataReceived(data: Any) {
-        val childActivity = FragmentPerfil()
-        childActivity.setDataCallback(this)
-        user = data as User
+    //Aqui vamos a recibir el usuario, con la modificaion del email hecho
+    override fun onDataReceived(u: User) {
+
+        /**
+         * Esto es para comprobar si este user no es null, si no lo es, es que hemos modificado el email.
+         * Si hemos modificado el email, los argumentos que vamos a pasar van a ser distintos
+         */
+        userCambiado = u
+
 
     }
+    //Mediante este metodo, recibimos la información del dialogo.
+    override fun onDialogPositiveClick(z: Calzado) {
+       objetoComprado=z
+        //El objeto esta inicilizado a null para asi ver si hemos comprado o no
+    }
 
+    override fun onResume() {
+        super.onResume()
+        if(objetoComprado!=null){
+            carritoLleno=true
+        }
+    }
 
 
 }

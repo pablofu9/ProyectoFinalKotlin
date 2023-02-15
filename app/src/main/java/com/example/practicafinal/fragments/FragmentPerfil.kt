@@ -10,6 +10,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.example.practicafinal.R
 import com.example.practicafinal.activities.MainActivity
 import com.example.practicafinal.dao.UserDAO
@@ -18,26 +20,29 @@ import com.example.practicafinal.services.UserService
 import io.github.muddz.styleabletoast.StyleableToast
 
 class FragmentPerfil : Fragment(), View.OnClickListener {
-    private lateinit var txtUser1:TextView
-    private lateinit var txtPass1:TextView
-    private lateinit var editEmail:EditText
-    private lateinit var editCambioEmail:EditText
-    private lateinit var btnCambio:Button
-    private lateinit var btnAceptar:Button
-    private lateinit var listaFacturas : ListView
-    var user:User=User()
-    private lateinit var dataCallback: DataCallback
-    var userCambiado:User=User()
-    var emailCambiado:Boolean=false
+    private lateinit var txtUser1: TextView
+    private lateinit var txtPass1: TextView
+    private lateinit var editEmail: EditText
+    private lateinit var editCambioEmail: EditText
+    private lateinit var btnCambio: Button
+    private lateinit var btnAceptar: Button
+    private lateinit var listaFacturas: ListView
+    var user: User = User()
+    private lateinit var dataCallback: DataCallback //Inicilizamos el datacallback
+    var userCambiado: User = User()
+    var emailCambiado: Boolean = false
     val serviceUser = UserService()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view =inflater.inflate(R.layout.fragment_perfil, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_perfil, container, false)
         txtUser1 = view.findViewById(R.id.txtUser1)
         txtPass1 = view.findViewById(R.id.txtPass1)
         editEmail = view.findViewById(R.id.editEmail)
@@ -52,9 +57,9 @@ class FragmentPerfil : Fragment(), View.OnClickListener {
          * Desde aqui vamos a poder visualizar nuestro perfil, y ademas vamos a poder cambiar la direccion de email
          * Ponemos el email como no editable, hasta que le demos al boton para cambiar email, entonces se hara editable
          */
-        if (arguments!=null){
-            user =arguments?.getSerializable("user") as User
-            editEmail.isEnabled=false
+        if (arguments != null) {
+            user = arguments?.getSerializable("user") as User
+            editEmail.isEnabled = false
         }
         onResume()
         return view
@@ -65,15 +70,16 @@ class FragmentPerfil : Fragment(), View.OnClickListener {
      * Falta que si cerramos la app despues de cambiar el email, ese email quede cambiado
      */
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.btnCambio->{
-                btnAceptar.visibility=View.VISIBLE
-                btnCambio.visibility=View.GONE
-                editCambioEmail.visibility=View.VISIBLE
+        when (v?.id) {
+            R.id.btnCambio -> {
+                btnAceptar.visibility = View.VISIBLE
+                btnCambio.visibility = View.GONE
+                editCambioEmail.visibility = View.VISIBLE
             }
-            R.id.btnAceptar->{
-                if(validarEmail(editCambioEmail.text.toString())){
-                    user=User(user.id,user.name,user.pass,editCambioEmail.text.toString(),false)
+            R.id.btnAceptar -> {
+                if (validarEmail(editCambioEmail.text.toString())) {
+                    user =
+                        User(user.id, user.name, user.pass, editCambioEmail.text.toString(), false)
                     updateUser(user)
                     StyleableToast.makeText(
                         requireContext(),
@@ -81,20 +87,27 @@ class FragmentPerfil : Fragment(), View.OnClickListener {
                         R.style.ColoredBackgroundGreen
                     ).show()
                     onResume()
-                    emailCambiado=true
+                    emailCambiado = true
                     editCambioEmail.setText("")
+                    dataCallback.onDataReceived(user)
 
-                }else{
-                    editCambioEmail.error="El formato del email es incorrecto"
+                } else {
+                    editCambioEmail.error = "El formato del email es incorrecto"
+                    YoYo.with(Techniques.DropOut)
+                        .duration(800)
+                        .repeat(2)
+                        .playOn(view?.findViewById(R.id.editCambioEmail));
                 }
 
             }
         }
     }
-    fun updateUser(u:User){
+
+    fun updateUser(u: User) {
         serviceUser.updateUser(u)
     }
-    fun validarEmail(email:String):Boolean{
+
+    fun validarEmail(email: String): Boolean {
         val emailPattern = Regex("[a-zA-Z0-9._%+-]+@[2a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
         return emailPattern.matches(email)
     }
@@ -106,14 +119,21 @@ class FragmentPerfil : Fragment(), View.OnClickListener {
         txtPass1.setText(user.pass)
         editEmail.setText(user.email)
     }
-    interface DataCallback {
-        fun onDataReceived(data: Any)
-    }
-    fun setDataCallback(dataCallback: DataCallback) {
-        this.dataCallback = dataCallback
-        dataCallback.onDataReceived(user)
-    }
 
+    //Esto es para poder mandar el usuario a la actividad menú, asi podemos actualizar el email para cada vez que entremos
+    interface DataCallback {
+        fun onDataReceived(user: User)
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        // Check that the parent activity has implemented the callback interface
+        if (context is DataCallback) {
+            // Set the dataCallback variable to the parent activity
+            dataCallback = context
+        } else {
+            throw RuntimeException("$context must implement DataCallback")
+        }
+    }
 
 
 }

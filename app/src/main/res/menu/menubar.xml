@@ -8,21 +8,22 @@
         android:title="Inicio"
         android:iconTint="@color/colorBoton"
         android:contentDescription="Inicio"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/profile"
         android:icon="@drawable/hombre"
         android:iconTint="@color/colorBoton"
         android:title="Profile"
         android:contentDescription="Change ur settings"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/carrito"
         android:icon="@drawable/carrito"
         android:title="Carrito"
         android:iconTint="@color/colorBoton"
         android:contentDescription="Carrito"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always"
+        />
 
     <item
         android:id="@+id/exit"
@@ -30,5 +31,5 @@
         android:title="Logout"
         android:iconTint="@color/colorBoton"
         android:contentDescription="Exit"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>

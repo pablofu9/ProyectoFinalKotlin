@@ -23,6 +23,14 @@ class Calzado:java.io.Serializable {
         this.talla = talla
         this.precio=precio
     }
+    constructor() {
+        this.id_calzado = 0
+        this.marca = ""
+        this.modelo = ""
+        this.talla = 0
+        this.precio=0
+    }
+
 
     override fun toString(): String {
         return "Calzado(id_calzado=$id_calzado, marca='$marca', modelo='$modelo', talla=$talla)"
