@@ -11,10 +11,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import com.example.practicafinal.R
 import com.example.practicafinal.dialogs.DialogFiltro
+import com.example.practicafinal.fragments.FragmentPerfil
+import com.example.practicafinal.fragments.FragmentProductos
 import com.example.practicafinal.model.User
 import com.example.practicafinal.services.UserService
 import com.google.android.material.appbar.MaterialToolbar
@@ -23,26 +26,35 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
+class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener,FragmentPerfil.DataCallback {
     private lateinit var topAppBar:MaterialToolbar
-
+    val manager = supportFragmentManager
+    val fragmentPerfil = FragmentPerfil()
+    val fragmentProductos = FragmentProductos()
+    private lateinit var frame1:FrameLayout
+    var user:User=User()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         topAppBar=findViewById(R.id.topAppBar)
         topAppBar.setOnMenuItemClickListener(this)
-
+        frame1 = findViewById(R.id.frame1)
         //Cuando nos logueamos le ponemos el titulo al menu
         if(intent.hasExtra("user")){
             /**
              * Para poner el titulo del menu, convertimos el nombre del usuario y ponemos la primera letra mayuscula
              */
-            var user = intent.getSerializableExtra("user") as User
+            user = intent.getSerializableExtra("user") as User
             var title = user.name.toString()
             var titleUpper = title.replaceFirst(title[0].toString(), title[0].toString().toUpperCase(
                 Locale.ROOT))
             topAppBar.title=titleUpper.toString()
         }
+        //Para que el fragment donde salen los productos sea el que se cargue default
+        val transaction = manager.beginTransaction()
+        transaction.replace(R.id.frame1, fragmentProductos)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
 
@@ -50,12 +62,27 @@ class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.profile->{
+                /**
+                 * Le mandamos al fragment de perfil, el usuario que hemos obtenido del login
+                 */
+                val transaction = manager.beginTransaction()
+                val bundle = Bundle()
+                bundle.putSerializable("user",user)
+                fragmentPerfil.arguments=bundle
+                transaction.replace(R.id.frame1, fragmentPerfil)
+                transaction.addToBackStack(null)
+                transaction.commit()
                return true
             }
-            R.id.search->{
+            R.id.inicio->{
+                val transaction = manager.beginTransaction()
+                transaction.replace(R.id.frame1, fragmentProductos)
+                transaction.addToBackStack(null)
+                transaction.commit()
                 //Nos saca un editext de buscar
+                /*
                 val dialogo = DialogFiltro()
-                dialogo.show(supportFragmentManager,"Filtrar")
+                dialogo.show(supportFragmentManager,"Filtrar")*/
                 return true
             }
             R.id.exit->{
@@ -96,6 +123,12 @@ class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         finishAffinity()
     }
 
+    override fun onDataReceived(data: Any) {
+        val childActivity = FragmentPerfil()
+        childActivity.setDataCallback(this)
+        user = data as User
+
+    }
 
 
 

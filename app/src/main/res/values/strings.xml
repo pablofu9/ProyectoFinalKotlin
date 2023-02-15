@@ -7,4 +7,6 @@
     <string name="aun_no_estas_registrado_hazlo_ahora">¿Aun no estas registrado? Hazlo ahora</string>
     <string name="email">Email</string>
     <string name="login">Login</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

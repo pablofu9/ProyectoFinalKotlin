@@ -2,10 +2,7 @@ package com.example.practicafinal.dao
 
 import com.example.practicafinal.model.User
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface UserDAO {
 
@@ -19,4 +16,7 @@ interface UserDAO {
     // Método para obtener una película por su ID
     @GET("user/{id}")
     fun getUser(@Path("id") id: Int): Call<User>
+
+    @PUT("user/{id}")
+    fun updateUser(@Path("id") id: Int, @Body user: User): Call<User>
 }

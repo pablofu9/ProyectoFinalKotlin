@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/inicio"
+        android:icon="@drawable/buy"
+        android:title="Inicio"
+        android:iconTint="@color/colorBoton"
+        android:contentDescription="Inicio"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/profile"
         android:icon="@drawable/hombre"
         android:iconTint="@color/colorBoton"
         android:title="Profile"
         android:contentDescription="Change ur settings"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/search"
-        android:icon="@drawable/buscar"
-        android:title="Search"
-        android:iconTint="@color/colorBoton"
-        android:contentDescription="Search"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/carrito"

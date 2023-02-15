@@ -17,12 +17,14 @@ class UserService {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
     fun createUser(user: User) {
         getRetrofit().create(UserDAO::class.java).createUser(user).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 Log.d("TAG", "CALL: $call")
                 Log.d("TAG", "RESPONSE: $response")
             }
+
             override fun onFailure(call: Call<User>, t: Throwable) {
                 // Procesar error en la petición
                 Log.d("TAG", "Error")
@@ -31,7 +33,23 @@ class UserService {
     }
 
     //Método para ver todos los libros
-    fun getUsers() : Call<List<User>> {
+    fun getUsers(): Call<List<User>> {
         return getRetrofit().create(UserDAO::class.java).getUsers()
+    }
+
+    fun updateUser(user: User) {
+        getRetrofit().create(UserDAO::class.java).updateUser(user.id,user)
+            .enqueue(object : Callback<User> {
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+                    Log.d("TAG", "CALL: $call")
+                    Log.d("TAG", "RESPONSE: $response")
+                }
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    // Procesar error en la petición
+                    Log.d("TAG", "Error")
+                }
+            })
+
     }
 }

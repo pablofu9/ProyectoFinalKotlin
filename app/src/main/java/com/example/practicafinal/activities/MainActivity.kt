@@ -124,11 +124,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             intent.putExtra("user", userLogged)
                             startActivity(intent)
                         }else{
-                            StyleableToast.makeText(
-                                this,
-                                "Credenciales incorrectas",
-                                R.style.ColoredBoldText
-                            ).show()
+
+                            editUser.error="Credenciales incorrectas"
                         }
 
                     }
@@ -159,25 +156,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             }
                         }
                         if(existe){
-                            StyleableToast.makeText(
-                                this,
-                                "Ya hay un usuario con este nombre, introduzca otro",
-                                R.style.ColoredBoldText
-                            ).show()
+                            editUser.error="El usuario ya existe, pruebe con otro"
                         }else{
                             if (editUser.text!!.length <=3 || editUser.text!!.length >10 ){
-                                StyleableToast.makeText(
-                                    this,
-                                    "Formato incorrecto, el nombre de usuario debe de tener entre 4 y 10 caracteres",
-                                    R.style.ColoredBoldText
-                                ).show()
+                                editUser.error="Formato de usuario incorrecto (entre 3 y 10 caracteres)"
                             } else{
-                                if (editPass.text!!.length <3 || editUser.text!!.length >12 ){
-                                    StyleableToast.makeText(
-                                        this,
-                                        "Introduzca una contraseña segura, entre 5 y 12 caracteres",
-                                        R.style.ColoredBoldText
-                                    ).show()
+                                if (editPass.text!!.length <5 || editUser.text!!.length >12 ){
+                                    editPass.error="Contraseña poco segura (Entre 5 y 12)"
                                 }else{
                                     if(validarEmail(editEmail.text.toString())){
                                         StyleableToast.makeText(
@@ -196,11 +181,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                                         arrayUsers.add(userRegister)
 
                                     }else{
-                                        StyleableToast.makeText(
-                                            this,
-                                            "Formato de email incorrecto",
-                                            R.style.ColoredBoldText
-                                        ).show()
+                                        editEmail.error="Formato de email incorrecto"
                                     }
                                 }
                             }
