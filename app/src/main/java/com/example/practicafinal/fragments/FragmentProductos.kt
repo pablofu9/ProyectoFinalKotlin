@@ -10,6 +10,7 @@ import com.example.practicafinal.R
 import com.example.practicafinal.controller.ProductoAdapter
 import com.example.practicafinal.dialogs.DialogComprar
 import com.example.practicafinal.model.Calzado
+import com.example.practicafinal.model.User
 import com.example.practicafinal.services.CalzadoService
 import retrofit2.Call
 import retrofit2.Callback
@@ -45,6 +46,7 @@ class FragmentProductos : Fragment() {
                     val adapter = context?.let { ProductoAdapter(it,arrayZapatillas) }
                     listaProductos.adapter = adapter
                     // Create the adapter and set it on the RecyclerView
+
                 } else {
                     Log.d("TAG", "Error")
                 }
@@ -55,8 +57,11 @@ class FragmentProductos : Fragment() {
                 t.message?.let { Log.d("Error", it) }
             }
         })
+        //Si nos llega de vuelta del ciclo fragment-menu-fragment, un argumento, es que hay un objeto en el carrito
+        //Por lo tanto no se podran comprar mas
 
-        registerForContextMenu(listaProductos)
+
+
         return view
     }
 
@@ -80,27 +85,16 @@ class FragmentProductos : Fragment() {
 
         return super.onContextItemSelected(item)
     }
-    /*fun getCalzados() {
-        calzadoService.getCalzados().enqueue(object : Callback<List<Calzado>> {
-            override fun onResponse(call: Call<List<Calzado>>, response: Response<List<Calzado>>) {
-                if (response.isSuccessful) {
-                    for (calzado in response.body()!!)
-                        arrayZapatillas.add(calzado)
-                    Log.d("zapas",arrayZapatillas.toString())
-                } else {
-                    Log.d("TAG", "Error")
-                }
-            }
 
-            override fun onFailure(call: Call<List<Calzado>>, t: Throwable) {
-                // something went completel1y south (like no internet connection)
-                t.message?.let { Log.d("Error", it) }
-            }
-        })
-    }*/
-    /*override fun onStart() {
+
+
+    override fun onStart() {
         super.onStart()
-        getCalzados()
-    }*/
+        if(arguments!=null){
+            //El menu solo se registra si no se ha comprado antes
+        }else{
+            registerForContextMenu(listaProductos)
+        }
+    }
 
 }

@@ -15,4 +15,5 @@
     <color name="colorBoton">#FFBE9B</color>
     <color name="navBar">#31476D</color>
     <color name="text">#3A423B</color>
+    <color name="botonPagar">#0BE426</color>
 </resources>

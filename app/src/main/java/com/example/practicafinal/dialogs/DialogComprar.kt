@@ -37,6 +37,7 @@ class DialogComprar(zapato:Calzado): DialogFragment(),DialogInterface.OnClickLis
                 //fragment de carrito
                 listener.onDialogPositiveClick(z)
 
+                dismiss()
             }
             -2->{
                 //Cancelar

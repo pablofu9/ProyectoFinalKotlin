@@ -34,6 +34,8 @@ android {
 
 dependencies {
 
+    implementation 'com.romainpiel.shimmer:library:1.4.0@aar'
+    implementation 'com.wrapp.floatlabelededittext:library:0.0.6'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'io.github.muddz:styleabletoast:2.4.0'
     implementation 'androidx.appcompat:appcompat:1.6.0'

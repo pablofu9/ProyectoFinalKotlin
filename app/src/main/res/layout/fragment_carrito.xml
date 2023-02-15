@@ -3,12 +3,158 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.FragmentCarrito">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <com.romainpiel.shimmer.ShimmerTextView
+            android:id="@+id/vacio"
+            android:text="Su carrito está vacio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#444"
+            android:textSize="50sp"
+            android:visibility="gone"/>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCarritoMarca"
+            android:text="Marca"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="25sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtMarca"
+            android:layout_toRightOf="@+id/txtCarritoMarca"
+            android:text="Marca"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/purplesmile"
+            android:textSize="25sp"/>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCarritoModelo"
+            android:text="Modelo"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/txtCarritoMarca"
+            android:textSize="25sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtModelo"
+            android:layout_toRightOf="@+id/txtCarritoModelo"
+            android:text="Modelo"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/txtCarritoMarca"
+            android:fontFamily="@font/purplesmile"
+            android:textSize="25sp"/>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCarritoTalla"
+            android:text="Talla"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/txtCarritoModelo"
+            android:textSize="25sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtTalla"
+            android:layout_toRightOf="@+id/txtCarritoTalla"
+            android:text="Talla"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/txtModelo"
+            android:fontFamily="@font/purplesmile"
+            android:textSize="25sp"/>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCarritoPrecio"
+            android:text="Precio"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/txtCarritoTalla"
+            android:textSize="25sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtPrecio"
+            android:layout_toRightOf="@+id/txtCarritoPrecio"
+            android:text="Precio"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/txtTalla"
+            android:fontFamily="@font/purplesmile"
+            android:textSize="25sp"/>
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCarritoCantidad"
+            android:text="Cantidad"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_below="@+id/txtCarritoPrecio"
+            android:textSize="25sp"/>
+
+        <NumberPicker
+            android:id="@+id/txtCantidad"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_below="@+id/txtPrecio"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="18dp"
+            android:layout_toRightOf="@+id/txtCarritoPrecio"
+            android:fontFamily="@font/purplesmile"
+            android:text="Cantidad"
+            android:textSize="30sp"/>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCarritoTotal"
+            android:layout_below="@+id/txtCarritoCantidad"
+            android:text="Total"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="25sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtTotal"
+            android:layout_toRightOf="@+id/txtCarritoTotal"
+            android:layout_below="@id/txtCarritoCantidad"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/purplesmile"
+            android:textSize="25sp"/>
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cash"
+            android:id="@+id/btnPagar"
+            android:layout_below="@+id/txtTotal"
+            android:layout_toRightOf="@+id/btnVaciar"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/botonPagar"/>
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:id="@+id/btnVaciar"
+            android:src="@drawable/garbage"
+            android:layout_below="@+id/txtTotal"
+            android:backgroundTint="@color/colorAccent"/>
+    </RelativeLayout>
+
+
 
 </FrameLayout>
