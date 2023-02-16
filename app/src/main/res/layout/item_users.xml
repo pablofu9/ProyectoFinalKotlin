@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:id="@+id/txtNombre"
+        android:layout_margin="20dp"
+        android:text="Nombre"
+        android:textColor="@color/black"
+        android:fontFamily="@font/dosis"
+        android:layout_gravity="center"/>
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:id="@+id/txtPass"
+        android:layout_margin="20dp"
+        android:text="pass"
+        android:textColor="@color/black"
+        android:fontFamily="@font/dosis"
+        android:layout_gravity="center"/>
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:text="email"
+        android:id="@+id/txtEmail"
+        android:layout_margin="20dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/dosis"
+        android:layout_gravity="center"/>
+</LinearLayout>

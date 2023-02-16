@@ -1,21 +1,22 @@
 package com.example.practicafinal.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.NumberPicker
 import android.widget.TextView
 import com.example.practicafinal.R
+import com.example.practicafinal.dialogs.DialogComprar
+import com.example.practicafinal.dialogs.DialogVaciar
 import com.example.practicafinal.model.Calzado
 import com.romainpiel.shimmer.Shimmer
 import com.romainpiel.shimmer.ShimmerTextView
-import org.w3c.dom.Text
 
 
-class FragmentCarrito : Fragment() {
+class FragmentCarrito : Fragment(), View.OnClickListener {
 
     private lateinit var txtMarca:TextView
     private lateinit var txtCarritoMarca:TextView
@@ -30,8 +31,15 @@ class FragmentCarrito : Fragment() {
     private lateinit var txtCantidad:NumberPicker
     private lateinit var txtTotal:TextView
     private lateinit var vacio:ShimmerTextView
+
+    private lateinit var btnPagar:ImageButton
+    private lateinit var btnVaciar:ImageButton
+
+
+
     var shimmer = Shimmer()
-    var zapato: Calzado? =null
+    var carritoVacio:Boolean=false
+    private var zapato: Calzado? =null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +65,40 @@ class FragmentCarrito : Fragment() {
         txtTotal = view.findViewById(R.id.txtTotal)
 
         vacio=view.findViewById(R.id.vacio)
-        setCantidad()
 
+        btnPagar=view.findViewById(R.id.btnPagar)
+        btnVaciar=view.findViewById(R.id.btnVaciar)
+        btnPagar.setOnClickListener(this)
+        btnVaciar.setOnClickListener(this)
+        setCantidad()
+        carritoVacio()
+
+
+
+        return view
+    }
+
+
+    fun setCantidad(){
+        txtCantidad.minValue=1
+        txtCantidad.maxValue=5
+        txtCantidad.wrapSelectorWheel=true
+        txtCantidad.value=1
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.btnVaciar->{
+                showDialog(zapato!!)
+            }
+            R.id.btnPagar->{
+
+            }
+        }
+    }
+
+
+    fun carritoVacio(){
         if(arguments!=null){
             shimmer.cancel()
             var suma:Int=0
@@ -74,38 +114,32 @@ class FragmentCarrito : Fragment() {
             }
         }else{
             //Si no recibimos argumento, es que el carrito esta vacio. Se mostrara un mensaje de carrito vacio.
-            vacio.visibility=View.VISIBLE
-            shimmer.start(vacio)
-            txtCarritoMarca.visibility=View.GONE
-            txtCarritoModelo.visibility=View.GONE
-            txtCarritoTalla.visibility=View.GONE
-            txtCarritoCantidad.visibility=View.GONE
-            txtCarritoPrecio.visibility=View.GONE
-            txtMarca.visibility=View.GONE
-            txtModelo.visibility=View.GONE
-            txtTalla.visibility=View.GONE
-            txtPrecio.visibility=View.GONE
-            txtCantidad.visibility=View.GONE
-            txtCarritoTotal.visibility=View.GONE
-            txtTotal.visibility=View.GONE
-
+            zapato=null
+            isVacio()
         }
-
-        txtMarca.text=zapato?.marca
-        txtModelo.text=zapato?.modelo
-        txtTalla.text=zapato?.talla.toString()
-        txtPrecio.text=zapato?.precio.toString() + " €"
-
-
-        return view
+    }
+    fun isVacio(){
+        vacio.visibility=View.VISIBLE
+        shimmer.start(vacio)
+        txtCarritoMarca.visibility=View.GONE
+        txtCarritoModelo.visibility=View.GONE
+        txtCarritoTalla.visibility=View.GONE
+        txtCarritoCantidad.visibility=View.GONE
+        txtCarritoPrecio.visibility=View.GONE
+        txtMarca.visibility=View.GONE
+        txtModelo.visibility=View.GONE
+        txtTalla.visibility=View.GONE
+        txtPrecio.visibility=View.GONE
+        txtCantidad.visibility=View.GONE
+        txtCarritoTotal.visibility=View.GONE
+        txtTotal.visibility=View.GONE
+        btnPagar.visibility=View.GONE
+        btnVaciar.visibility=View.GONE
+    }
+    fun showDialog(c:Calzado){
+        val vaciar = DialogVaciar(c)
+        activity?.let { vaciar.show(it.supportFragmentManager, "vaciar") }
     }
 
-
-    fun setCantidad(){
-        txtCantidad.minValue=1
-        txtCantidad.maxValue=5
-        txtCantidad.wrapSelectorWheel=true
-        txtCantidad.value=1
-    }
 
 }

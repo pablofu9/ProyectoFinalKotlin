@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.DialogFragment
 import com.example.practicafinal.R
+import com.example.practicafinal.interfaces.OnDeleteConfirmListener
 import com.example.practicafinal.model.Calzado
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.github.muddz.styleabletoast.StyleableToast
@@ -16,6 +17,8 @@ import io.github.muddz.styleabletoast.StyleableToast
 class DialogComprar(zapato:Calzado): DialogFragment(),DialogInterface.OnClickListener {
     private var z:Calzado = zapato
     private lateinit var listener: MyDialogListener
+    private var mListener: OnDialogDismissListener? = null
+    private var onDeleteConfirmListener: OnDeleteConfirmListener? = null
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = MaterialAlertDialogBuilder(requireContext())
         builder.setTitle("¿Añadir al carrito?")
@@ -29,14 +32,11 @@ class DialogComprar(zapato:Calzado): DialogFragment(),DialogInterface.OnClickLis
         when(which){
             -1->{
                 //Aceptar
-                /*StyleableToast.makeText(
-                    requireContext(),
-                    "Introduce tus credenciales",
-                    R.style.ColoredBackground)*/
+
                 //Vamos a mandar el zapato que hemos seleccionado de uelta a la actividad menu, para desde ahi poder pasarlo al
                 //fragment de carrito
                 listener.onDialogPositiveClick(z)
-
+                //onDeleteConfirmListener?.onDeleteConfirmed()
                 dismiss()
             }
             -2->{
@@ -53,9 +53,18 @@ class DialogComprar(zapato:Calzado): DialogFragment(),DialogInterface.OnClickLis
 
         try{
             listener = context as MyDialogListener
+
         }catch (e : java.lang.ClassCastException){
             throw ClassCastException("$context must implement MyDialogListener")
 
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        mListener?.onDismiss()
+    }
+    interface OnDialogDismissListener {
+        fun onDismiss()
     }
 }

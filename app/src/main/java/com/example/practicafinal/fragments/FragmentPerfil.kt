@@ -15,6 +15,7 @@ import com.daimajia.androidanimations.library.YoYo
 import com.example.practicafinal.R
 import com.example.practicafinal.activities.MainActivity
 import com.example.practicafinal.dao.UserDAO
+import com.example.practicafinal.model.Calzado
 import com.example.practicafinal.model.User
 import com.example.practicafinal.services.UserService
 import io.github.muddz.styleabletoast.StyleableToast
@@ -123,6 +124,7 @@ class FragmentPerfil : Fragment(), View.OnClickListener {
     //Esto es para poder mandar el usuario a la actividad menú, asi podemos actualizar el email para cada vez que entremos
     interface DataCallback {
         fun onDataReceived(user: User)
+        fun onDialogPositiveClick2(z: Calzado)
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)

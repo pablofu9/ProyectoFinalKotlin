@@ -17,7 +17,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
 
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/appBar">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
@@ -30,7 +31,12 @@
             style="@style/Widget.MaterialComponents.Toolbar.Primary">
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
-
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/bottom_navigation_menu"
+            android:visibility="gone"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="634dp"
