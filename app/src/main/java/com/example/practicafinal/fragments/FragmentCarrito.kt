@@ -1,6 +1,7 @@
 package com.example.practicafinal.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +13,12 @@ import com.example.practicafinal.R
 import com.example.practicafinal.dialogs.DialogComprar
 import com.example.practicafinal.dialogs.DialogVaciar
 import com.example.practicafinal.model.Calzado
+import com.example.practicafinal.model.Factura
+import com.example.practicafinal.model.User
+import com.example.practicafinal.services.FacturaService
 import com.romainpiel.shimmer.Shimmer
 import com.romainpiel.shimmer.ShimmerTextView
+import io.github.muddz.styleabletoast.StyleableToast
 
 
 class FragmentCarrito : Fragment(), View.OnClickListener {
@@ -34,9 +39,9 @@ class FragmentCarrito : Fragment(), View.OnClickListener {
 
     private lateinit var btnPagar:ImageButton
     private lateinit var btnVaciar:ImageButton
-
-
-
+    private var serviceFactura=FacturaService()
+    var user : User?=null
+    var suma:Int=0
     var shimmer = Shimmer()
     var carritoVacio:Boolean=false
     private var zapato: Calzado? =null
@@ -75,6 +80,8 @@ class FragmentCarrito : Fragment(), View.OnClickListener {
 
 
 
+
+
         return view
     }
 
@@ -92,6 +99,22 @@ class FragmentCarrito : Fragment(), View.OnClickListener {
                 showDialog(zapato!!)
             }
             R.id.btnPagar->{
+                if(suma!=0){
+                    var f:Factura = Factura(user!!.id,zapato!!.id_calzado,txtCantidad.value,suma)
+                    createFactura(f)
+                    StyleableToast.makeText(
+                        requireContext(),
+                        "Gracias por su compra",
+                        R.style.ColoredBackgroundGreen
+                    ).show()
+                }else{
+                    StyleableToast.makeText(
+                        requireContext(),
+                        "Seleccione una cantidad",
+                        R.style.ColoredBoldText
+                    ).show()
+                }
+
 
             }
         }
@@ -99,11 +122,11 @@ class FragmentCarrito : Fragment(), View.OnClickListener {
 
 
     fun carritoVacio(){
-        if(arguments!=null){
+        if(arguments!=null && requireArguments().containsKey("zapato")){
             shimmer.cancel()
-            var suma:Int=0
-            zapato = arguments?.getSerializable("zapato") as Calzado
 
+            zapato = arguments?.getSerializable("zapato") as Calzado
+            user = arguments?.getSerializable("user") as User
             txtMarca.text=zapato?.marca
             txtModelo.text=zapato?.modelo
             txtTalla.text=zapato?.talla.toString()
@@ -140,6 +163,11 @@ class FragmentCarrito : Fragment(), View.OnClickListener {
         val vaciar = DialogVaciar(c)
         activity?.let { vaciar.show(it.supportFragmentManager, "vaciar") }
     }
-
+    fun createFactura(f: Factura){
+        serviceFactura.createFactura(f)
+    }
+    fun vaciar(){
+        zapato=null
+    }
 
 }

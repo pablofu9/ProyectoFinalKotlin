@@ -12,11 +12,14 @@ import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import com.example.practicafinal.R
+import com.example.practicafinal.dialogs.DialogAddCalzado
 import com.example.practicafinal.dialogs.DialogComprar
 import com.example.practicafinal.dialogs.DialogVaciar
 import com.example.practicafinal.fragments.FragmentCarrito
 import com.example.practicafinal.fragments.FragmentPerfil
 import com.example.practicafinal.fragments.FragmentProductos
+import com.example.practicafinal.fragments.fragmentsAdmin.FragmentUsers
+import com.example.practicafinal.fragments.fragmentsAdmin.FragmentZapatillas
 import com.example.practicafinal.interfaces.OnDeleteConfirmListener
 import com.example.practicafinal.model.Calzado
 import com.example.practicafinal.model.User
@@ -33,6 +36,8 @@ class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener, FragmentPerfi
     val fragmentPerfil = FragmentPerfil()
     val fragmentProductos = FragmentProductos()
     val fragmentCarrito = FragmentCarrito()
+    val fragmentUsers=FragmentUsers()
+    val fragmentZapatillas = FragmentZapatillas()
     private lateinit var frame1: FrameLayout
     private lateinit var appBar:AppBarLayout
     var userCambiado: User? = null
@@ -61,6 +66,7 @@ class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener, FragmentPerfi
             if(user.admin){
                 topAppBar.visibility=View.GONE
                 navigation.visibility=View.VISIBLE
+                cargarUsersAdmin() //Si es admin, la pantalla principal seran los usuarios
                 //Si el usuario es admin, se quita la barra que le aparecen a los usuarios y se pone la otra
                 navigation.setOnItemSelectedListener { item ->
                     when (item.itemId) {
@@ -71,11 +77,14 @@ class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener, FragmentPerfi
                             true
                         }
                        R.id.shoes -> {
+                           cargarZapatillas()
                             // Handle tab 2 selection
                             true
                         }
                         R.id.users -> {
-                            // Handle tab 3 selection
+                            //Le mandamos el usuario
+
+                            cargarUsersAdmin()
                             true
                         }
                         else -> false
@@ -247,16 +256,40 @@ class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener, FragmentPerfi
     }
     fun cargarFragmentCarrito(){
         val transaction = manager.beginTransaction()
-        if(objetoComprado!=null){
-            var bundle = Bundle()
+        var bundle = Bundle()
+        if(objetoComprado!=null) {
             bundle.putSerializable("zapato", objetoComprado)
-            fragmentCarrito.arguments = bundle
         }
+        if (userCambiado != null) {
+            bundle.putSerializable("user", userCambiado)
+        } else {
+            bundle.putSerializable("user", user)
+        }
+            fragmentCarrito.arguments = bundle
+
 
         transaction.replace(R.id.frame1, fragmentCarrito)
         transaction.addToBackStack(null)
         transaction.commit()
     }
+    fun cargarUsersAdmin(){
+        val transaction = manager.beginTransaction()
+        val bundle=Bundle()
+        bundle.putSerializable("user",user)
+        fragmentUsers.arguments=bundle
+        transaction.replace(R.id.frame1, fragmentUsers)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    fun cargarZapatillas(){
+        val transaction = manager.beginTransaction()
+
+        transaction.replace(R.id.frame1, fragmentZapatillas)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
 
 
 }

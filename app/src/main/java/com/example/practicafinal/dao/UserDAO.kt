@@ -19,4 +19,7 @@ interface UserDAO {
 
     @PUT("user/{id}")
     fun updateUser(@Path("id") id: Int, @Body user: User): Call<User>
+
+    @DELETE("user/{id}")
+    fun deleteUser(@Path("id") id: Int): Call<User>
 }

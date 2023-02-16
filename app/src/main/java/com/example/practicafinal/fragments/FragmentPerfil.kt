@@ -2,6 +2,7 @@ package com.example.practicafinal.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +15,18 @@ import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.practicafinal.R
 import com.example.practicafinal.activities.MainActivity
+import com.example.practicafinal.controller.FacturaAdapter
+import com.example.practicafinal.controller.ProductoAdapter
 import com.example.practicafinal.dao.UserDAO
 import com.example.practicafinal.model.Calzado
+import com.example.practicafinal.model.Factura
 import com.example.practicafinal.model.User
+import com.example.practicafinal.services.FacturaService
 import com.example.practicafinal.services.UserService
 import io.github.muddz.styleabletoast.StyleableToast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class FragmentPerfil : Fragment(), View.OnClickListener {
     private lateinit var txtUser1: TextView
@@ -29,11 +37,12 @@ class FragmentPerfil : Fragment(), View.OnClickListener {
     private lateinit var btnAceptar: Button
     private lateinit var listaFacturas: ListView
     var user: User = User()
+    val facturaService=FacturaService()
     private lateinit var dataCallback: DataCallback //Inicilizamos el datacallback
     var userCambiado: User = User()
     var emailCambiado: Boolean = false
     val serviceUser = UserService()
-
+    var arrayFactura=ArrayList<Factura>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,7 +71,37 @@ class FragmentPerfil : Fragment(), View.OnClickListener {
             user = arguments?.getSerializable("user") as User
             editEmail.isEnabled = false
         }
+        facturaService.getFacturas().enqueue(object : Callback<List<Factura>> {
+            /**
+             * Cogemos los datos de la api y metemos en una lista de zapatillas, y ahora ponemos el adaptador.
+             */
+
+            override fun onResponse(call: Call<List<Factura>>, response: Response<List<Factura>>) {
+                if (response.isSuccessful) {
+                    arrayFactura.clear()
+                    for (factura in response.body()!!)
+                        if(factura.id_user==user.id){
+                            //recorremos las facturas y solo mostramos las del usuario del que estamos loggeados
+                            arrayFactura.add(factura)
+                        }
+
+
+                    val adapter = context?.let { FacturaAdapter(it,arrayFactura) }
+                    listaFacturas.adapter = adapter
+                    // Create the adapter and set it on the RecyclerView
+
+                } else {
+                    Log.d("TAG", "Error")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Factura>>, t: Throwable) {
+                // something went completely south (like no internet connection)
+                t.message?.let { Log.d("Error", it) }
+            }
+        })
         onResume()
+
         return view
 
     }

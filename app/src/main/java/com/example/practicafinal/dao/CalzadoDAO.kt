@@ -3,10 +3,7 @@ package com.example.practicafinal.dao
 import com.example.practicafinal.model.Calzado
 import com.example.practicafinal.model.User
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface CalzadoDAO {
     @POST("calzados") //Debe coincidir con la ruta dle servlet
@@ -19,4 +16,8 @@ interface CalzadoDAO {
     // Método para obtener una película por su ID
     @GET("calzado/{id}")
     fun getCalzado(@Path("id") id: Int): Call<Calzado>
+
+    @DELETE("calzado/{id}")
+    fun deleteCalzado(@Path("id") id: Int): Call<Calzado>
+
 }

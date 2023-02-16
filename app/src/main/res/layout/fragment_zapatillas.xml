@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.fragmentsAdmin.FragmentUsers">
+    tools:context=".fragments.fragmentsAdmin.FragmentZapatillas">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,19 +13,17 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/listaUsers"
+            android:id="@+id/listaZapatillas"
             android:layout_gravity="center"/>
-
     </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnAddUsers"
+        android:id="@+id/btnAddZapatillas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:backgroundTint="@color/botonPagar"
         android:contentDescription="Añadir"
         app:srcCompat="@drawable/agregar"/>
-
 
 </FrameLayout>

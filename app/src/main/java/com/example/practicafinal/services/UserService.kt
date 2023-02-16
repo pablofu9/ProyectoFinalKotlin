@@ -52,4 +52,18 @@ class UserService {
             })
 
     }
+    fun deleteUser(u:User){
+        getRetrofit().create(UserDAO::class.java).deleteUser(u.id)
+            .enqueue(object : Callback<User> {
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+                    Log.d("TAG", "CALL: $call")
+                    Log.d("TAG", "RESPONSE: $response")
+                }
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    // Procesar error en la petición
+                    Log.d("TAG", "Error")
+                }
+            })
+    }
 }
