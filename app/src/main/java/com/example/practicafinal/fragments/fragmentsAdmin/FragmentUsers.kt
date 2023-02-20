@@ -7,13 +7,12 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import android.widget.ListView
 import com.example.practicafinal.R
-import com.example.practicafinal.controller.ProductoAdapter
 import com.example.practicafinal.controller.UsersAdapter
-import com.example.practicafinal.dialogs.DialogAddUser
-import com.example.practicafinal.dialogs.DialogComprar
-import com.example.practicafinal.dialogs.DialogUpdateUser
-import com.example.practicafinal.model.Calzado
+import com.example.practicafinal.dialogs.dialogsAdmin.DialogAddUser
+import com.example.practicafinal.dialogs.dialogsAdmin.DialogUpdateUser
+import com.example.practicafinal.model.Factura
 import com.example.practicafinal.model.User
+import com.example.practicafinal.services.FacturaService
 import com.example.practicafinal.services.UserService
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.github.muddz.styleabletoast.StyleableToast
@@ -25,9 +24,12 @@ class FragmentUsers : Fragment(), View.OnClickListener {
     private lateinit var listaUsers: ListView
     private var arrayUsers = ArrayList<User>()
     val userService = UserService()
+    val facturaService = FacturaService()
     var user: User? = null
     var adapter: UsersAdapter? = null
+    var existe:Boolean=false
     private lateinit var btnAddUsers: FloatingActionButton
+    private var arrayFactura = ArrayList<Factura>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +46,8 @@ class FragmentUsers : Fragment(), View.OnClickListener {
         listaUsers = view.findViewById(R.id.listaUsers)
         btnAddUsers = view.findViewById(R.id.btnAddUsers)
         btnAddUsers.setOnClickListener(this)
-        leer()
+        leer()//Para llenar el arraylist de usuarios
+        leerFacturas()//Para llenar los arraylist de factura
         registerForContextMenu(listaUsers)
         if (arguments != null) {
             user = arguments?.getSerializable("user") as User
@@ -68,6 +71,12 @@ class FragmentUsers : Fragment(), View.OnClickListener {
         var userBorrar: User = listaUsers.adapter?.getItem(info.position) as User
         when (item.itemId) {
             R.id.eliminar -> {
+                existe=false
+                for (factura in arrayFactura){
+                    if(userBorrar.id == factura.id_user){
+                        existe = true
+                    }
+                }
                 //Borramos el usuario selected
 
                 //Primero comprobamos que el usuario que vamos a borrar es diferente al que estamos logueados
@@ -80,7 +89,15 @@ class FragmentUsers : Fragment(), View.OnClickListener {
                             R.style.ColoredBoldText
                         ).show()
                     }
-                } else {
+                } else if(existe) {
+                    activity?.let {
+                        StyleableToast.makeText(
+                            it,
+                            "No se puede borrar usuarios con facturas generadas",
+                            R.style.ColoredBoldText
+                        ).show()
+                    }
+                }else{
                     //Si no coincide borramos
                     deleteUser(userBorrar)
                     arrayUsers.remove(userBorrar)
@@ -161,6 +178,35 @@ class FragmentUsers : Fragment(), View.OnClickListener {
                 t.message?.let { Log.d("Error", it) }
             }
 
+        })
+    }
+    fun leerFacturas(){
+        facturaService.getFacturas().enqueue(object : Callback<List<Factura>> {
+            /**
+             * Cogemos los datos de la api y metemos en una lista de zapatillas, y ahora ponemos el adaptador.
+             */
+
+            override fun onResponse(call: Call<List<Factura>>, response: Response<List<Factura>>) {
+                if (response.isSuccessful) {
+                    arrayFactura.clear()
+                    for (factura in response.body()!!)
+                        arrayFactura.add(factura)
+                    //recorremos las facturas y solo mostramos las del usuario del que estamos loggeados
+
+
+
+
+
+                    // Create the adapter and set it on the RecyclerView
+                } else {
+                    Log.d("TAG", "Error")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Factura>>, t: Throwable) {
+                // something went completely south (like no internet connection)
+                t.message?.let { Log.d("Error", it) }
+            }
         })
     }
 }

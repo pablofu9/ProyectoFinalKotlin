@@ -20,4 +20,7 @@ interface CalzadoDAO {
     @DELETE("calzado/{id}")
     fun deleteCalzado(@Path("id") id: Int): Call<Calzado>
 
+    @PUT("calzado/{id}")
+    fun updateCalzado(@Path("id") id: Int, @Body c: Calzado): Call<Calzado>
+
 }

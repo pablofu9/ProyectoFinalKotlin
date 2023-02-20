@@ -7,13 +7,11 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import android.widget.ListView
 import com.example.practicafinal.R
-import com.example.practicafinal.controller.FacturaAdapter
 import com.example.practicafinal.controller.ProductoAdapter
-import com.example.practicafinal.dialogs.DialogAddCalzado
-import com.example.practicafinal.dialogs.DialogAddUser
+import com.example.practicafinal.dialogs.dialogsAdmin.DialogAddCalzado
+import com.example.practicafinal.dialogs.dialogsAdmin.DialogUpdateCalzado
 import com.example.practicafinal.model.Calzado
 import com.example.practicafinal.model.Factura
-import com.example.practicafinal.model.User
 import com.example.practicafinal.services.CalzadoService
 import com.example.practicafinal.services.FacturaService
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -73,6 +71,8 @@ class FragmentZapatillas : Fragment(), View.OnClickListener {
                  * Para que no haya problemas de delete on cascade entre tablas
                  * Entonces si alguien ya genero una factura de ese producto, no se podra borrar
                  */
+                noBorrar=false //La ponemos en false, paar que si el usuario primero le da a uno que no se puede,
+                //La varible no se quede en true y se puedan borrar los demas
                 for (factura in arrayFactura) {
                     if (factura.id_calzado == calzado.id_calzado) {
                         noBorrar = true
@@ -103,7 +103,7 @@ class FragmentZapatillas : Fragment(), View.OnClickListener {
 
             }
             R.id.modificar -> {
-                //Comprobamos que no se este modificando el usuario en uso
+                showDialogUpdate(calzado)
 
             }
 
@@ -175,6 +175,10 @@ class FragmentZapatillas : Fragment(), View.OnClickListener {
     }
     fun showDialogAdd() {
         val add = DialogAddCalzado()
+        activity?.let { add.show(it.supportFragmentManager, "add") }
+    }
+    fun showDialogUpdate(c:Calzado) {
+        val add = DialogUpdateCalzado(c)
         activity?.let { add.show(it.supportFragmentManager, "add") }
     }
 

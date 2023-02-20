@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.FragmentPerfil">
+    tools:context=".fragments.fragmentsUser.FragmentPerfil">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,6 +32,11 @@
             android:layout_margin="20dp"
             android:textSize="20sp"
             />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/txtUser1"
+            android:layout_margin="20dp"/>
         <TextView
             android:layout_width="90dp"
             android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.example.practicafinal.fragments
+package com.example.practicafinal.fragments.fragmentsUser
 
 import android.content.Context
 import android.os.Bundle
@@ -14,10 +14,7 @@ import android.widget.TextView
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.practicafinal.R
-import com.example.practicafinal.activities.MainActivity
 import com.example.practicafinal.controller.FacturaAdapter
-import com.example.practicafinal.controller.ProductoAdapter
-import com.example.practicafinal.dao.UserDAO
 import com.example.practicafinal.model.Calzado
 import com.example.practicafinal.model.Factura
 import com.example.practicafinal.model.User

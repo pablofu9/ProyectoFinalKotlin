@@ -1,4 +1,4 @@
-package com.example.practicafinal.dialogs
+package com.example.practicafinal.dialogs.dialogsAdmin
 
 import android.app.Dialog
 import android.content.DialogInterface

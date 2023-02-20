@@ -1,17 +1,17 @@
-package com.example.practicafinal.fragments
+package com.example.practicafinal.fragments.fragmentsUser
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.NumberPicker
 import android.widget.TextView
 import com.example.practicafinal.R
-import com.example.practicafinal.dialogs.DialogComprar
-import com.example.practicafinal.dialogs.DialogVaciar
+import com.example.practicafinal.dialogs.dialogsUser.DialogPagar
+import com.example.practicafinal.dialogs.dialogsUser.DialogVaciar
 import com.example.practicafinal.model.Calzado
 import com.example.practicafinal.model.Factura
 import com.example.practicafinal.model.User
@@ -100,19 +100,16 @@ class FragmentCarrito : Fragment(), View.OnClickListener {
             }
             R.id.btnPagar->{
                 if(suma!=0){
-                    var f:Factura = Factura(user!!.id,zapato!!.id_calzado,txtCantidad.value,suma)
-                    createFactura(f)
-                    StyleableToast.makeText(
-                        requireContext(),
-                        "Gracias por su compra",
-                        R.style.ColoredBackgroundGreen
-                    ).show()
+                    showDialogPagar(user!!,zapato!!,txtCantidad.value,suma) //Le pasamos al dialog
+                    //lo que hay que introducir en la factura
+
                 }else{
                     StyleableToast.makeText(
                         requireContext(),
                         "Seleccione una cantidad",
                         R.style.ColoredBoldText
                     ).show()
+
                 }
 
 
@@ -163,11 +160,21 @@ class FragmentCarrito : Fragment(), View.OnClickListener {
         val vaciar = DialogVaciar(c)
         activity?.let { vaciar.show(it.supportFragmentManager, "vaciar") }
     }
+
+    fun showDialogPagar(u:User,z:Calzado,cantidad:Int,suma:Int){
+        val pagar = DialogPagar(u,z,cantidad,suma)
+        activity?.let { pagar.show(it.supportFragmentManager, "pagar") }
+    }
     fun createFactura(f: Factura){
         serviceFactura.createFactura(f)
     }
     fun vaciar(){
+        arguments=null
         zapato=null
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        vaciar()
     }
 
 }

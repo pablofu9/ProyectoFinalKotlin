@@ -1,19 +1,16 @@
-package com.example.practicafinal.dialogs
+package com.example.practicafinal.dialogs.dialogsAdmin
 
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.DialogInterface.OnClickListener
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.DialogFragment
 import com.example.practicafinal.R
-import com.example.practicafinal.fragments.fragmentsAdmin.FragmentUsers
 import com.example.practicafinal.fragments.fragmentsAdmin.FragmentZapatillas
 import com.example.practicafinal.model.Calzado
-import com.example.practicafinal.model.User
 import com.example.practicafinal.services.CalzadoService
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText

@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class CalzadoService {
     fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.145.107:8080/ServidorREST/")
+            .baseUrl("http://192.168.1.40:8080/ServidorREST/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -48,5 +48,20 @@ class CalzadoService {
                     Log.d("TAG", "Error")
                 }
             })
+    }
+    fun updateCalzado(c: Calzado) {
+        getRetrofit().create(CalzadoDAO::class.java).updateCalzado(c.id_calzado,c)
+            .enqueue(object : Callback<Calzado> {
+                override fun onResponse(call: Call<Calzado>, response: Response<Calzado>) {
+                    Log.d("TAG", "CALL: $call")
+                    Log.d("TAG", "RESPONSE: $response")
+                }
+
+                override fun onFailure(call: Call<Calzado>, t: Throwable) {
+                    // Procesar error en la petición
+                    Log.d("TAG", "Error")
+                }
+            })
+
     }
 }

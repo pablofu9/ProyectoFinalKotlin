@@ -1,17 +1,13 @@
-package com.example.practicafinal.dialogs
+package com.example.practicafinal.dialogs.dialogsUser
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.DialogFragment
-import com.example.practicafinal.R
 import com.example.practicafinal.interfaces.OnDeleteConfirmListener
 import com.example.practicafinal.model.Calzado
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import io.github.muddz.styleabletoast.StyleableToast
 
 //Alert dialog con material design
 class DialogComprar(zapato:Calzado): DialogFragment(),DialogInterface.OnClickListener {

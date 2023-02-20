@@ -1,5 +1,6 @@
 package com.example.practicafinal.activities
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -12,12 +13,12 @@ import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import com.example.practicafinal.R
-import com.example.practicafinal.dialogs.DialogAddCalzado
-import com.example.practicafinal.dialogs.DialogComprar
-import com.example.practicafinal.dialogs.DialogVaciar
-import com.example.practicafinal.fragments.FragmentCarrito
-import com.example.practicafinal.fragments.FragmentPerfil
-import com.example.practicafinal.fragments.FragmentProductos
+import com.example.practicafinal.dialogs.dialogsUser.DialogComprar
+import com.example.practicafinal.dialogs.dialogsUser.DialogPagar
+import com.example.practicafinal.dialogs.dialogsUser.DialogVaciar
+import com.example.practicafinal.fragments.fragmentsUser.FragmentCarrito
+import com.example.practicafinal.fragments.fragmentsUser.FragmentPerfil
+import com.example.practicafinal.fragments.fragmentsUser.FragmentProductos
 import com.example.practicafinal.fragments.fragmentsAdmin.FragmentUsers
 import com.example.practicafinal.fragments.fragmentsAdmin.FragmentZapatillas
 import com.example.practicafinal.interfaces.OnDeleteConfirmListener
@@ -29,7 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.*
 
 class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener, FragmentPerfil.DataCallback,
-    DialogComprar.MyDialogListener,OnDeleteConfirmListener,DialogVaciar.MyDialogListener {
+    DialogComprar.MyDialogListener,OnDeleteConfirmListener, DialogVaciar.MyDialogListener,DialogPagar.MyDialogListener {
 
     private lateinit var topAppBar: MaterialToolbar
     val manager = supportFragmentManager
@@ -128,7 +129,20 @@ class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener, FragmentPerfi
                 return true
             }
             R.id.inicio -> {
-                cargarPrincipal()
+                Log.d("objeto",objetoComprado.toString())
+                if(fragmentCarrito.isAdded && objetoComprado==null){
+                    val fragmentTransaction = manager.beginTransaction()
+                    fragmentTransaction.remove(fragmentCarrito)
+                    fragmentTransaction.commit()
+                    Log.d("ssa",objetoComprado.toString())
+                    val transaction = manager.beginTransaction()
+                    fragmentProductos.arguments=null
+                    transaction.add(R.id.frame1, fragmentProductos)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+                }else{
+                    cargarPrincipal()                }
+
                 //Nos saca un editext de buscar
                 /*
                 val dialogo = DialogFiltro()
@@ -214,6 +228,7 @@ class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener, FragmentPerfi
         //El objeto esta inicilizado a null para asi ver si hemos comprado o no
     }
 
+
     fun cargarPrincipal() {
 
         val transaction = manager.beginTransaction()
@@ -254,6 +269,8 @@ class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener, FragmentPerfi
 
         //cargarFragmentCarrito()
     }
+
+
     fun cargarFragmentCarrito(){
         val transaction = manager.beginTransaction()
         var bundle = Bundle()
@@ -290,6 +307,11 @@ class Menu : AppCompatActivity(), Toolbar.OnMenuItemClickListener, FragmentPerfi
         transaction.commit()
     }
 
+    override fun onDialogPositiveClick3() {
+        objetoComprado=null
+        cargarFragmentCarrito()
+        //Cuando compramos, seteamos el objeto que vamos pasando entre fragments a null, para que se pueda volver a comprar
+    }
 
 
 }

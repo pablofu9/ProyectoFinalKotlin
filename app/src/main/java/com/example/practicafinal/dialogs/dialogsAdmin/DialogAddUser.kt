@@ -1,4 +1,4 @@
-package com.example.practicafinal.dialogs
+package com.example.practicafinal.dialogs.dialogsAdmin
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -14,7 +14,6 @@ import com.example.practicafinal.services.UserService
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import io.github.muddz.styleabletoast.StyleableToast
-import java.nio.file.attribute.AclEntry.Builder
 
 class DialogAddUser:DialogFragment(),OnClickListener {
     private lateinit var edUser:TextInputEditText
