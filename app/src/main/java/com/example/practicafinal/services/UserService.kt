@@ -13,7 +13,7 @@ class UserService {
 
     fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.40:8080/ServidorREST/")
+            .baseUrl("http://192.168.145.107:8080/ServidorREST/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

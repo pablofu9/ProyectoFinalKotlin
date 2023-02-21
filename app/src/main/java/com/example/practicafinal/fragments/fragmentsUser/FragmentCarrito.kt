@@ -172,9 +172,6 @@ class FragmentCarrito : Fragment(), View.OnClickListener {
         arguments=null
         zapato=null
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        vaciar()
-    }
+
 
 }
